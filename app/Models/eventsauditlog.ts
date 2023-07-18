@@ -1,23 +1,15 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column } from '@ioc:Adonis/Lucid/Orm'
 
-export default class events extends BaseModel {
+export default class Eventsauditlog extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+
   @column()
-  public eventId :string
+  public route_accessed:string
+
   @column()
-  public eventCategoryId :string
-  @column()
-  public eventName:string
-  @column()
-  public eventDescription: string
-  @column()
-  public eventPlace:string
-  @column()
-  public eventDate:Date
-  @column() 
-  public eventTime: string
+  public ip_address:string
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

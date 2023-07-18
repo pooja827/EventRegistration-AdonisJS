@@ -19,13 +19,29 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import Eventaudit from 'App/Middleware/EventAudit';
 
 Route.get('/', async () => {
   return { hello: 'world' }
 })
-Route.get('/selectevent','EventsController.selectAll')
+Route.group(()=>{
+  Route.get('/selectevent','EventsController.selectAll')
 Route.post('/insertevent', 'EventsController.insertion')
 Route.get('selectedevent/:id','EventsController.selectById')
 Route.put('updationevent/:id','EventsController.updation')
 Route.delete("Deletionevent/:id",'EventsController.deletion')
 Route.get("/searchevent/",'EventsController.searchAll')
+Route.get('/check/:eventId', 'EventsController.checkEventId');
+
+  }).middleware('Eventaudit');
+  Route.post('/converttocsv', 'EventsController.store')
+  Route.get('/download', 'EventsController.downloadCSV');
+
+  export default Route;
+// Route.get('/logging', async ({ request, response }) => {
+//   const logMiddleware = new Eventaudit();
+//   await logMiddleware.handle({ request }, async () => {
+//     return response.send('Logging executed successfully');
+//   });
+// });
+
